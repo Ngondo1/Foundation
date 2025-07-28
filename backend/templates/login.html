@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}User Login - Michael Karanga Golf Foundation{% endblock %}
+{% block content %}
+<section>
+    <h2>User Login</h2>
+    <form method="post" action="{{ url_for('main.login') }}" style="max-width:350px;margin:2rem auto;">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" required style="width:100%;margin-bottom:1rem;">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required style="width:100%;margin-bottom:1rem;">
+        <button type="submit" style="width:100%;">Login</button>
+    </form>
+    <p style="text-align:center;">Don't have an account? <a href="{{ url_for('main.register') }}">Register</a></p>
+</section>
+{% endblock %}

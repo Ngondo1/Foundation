@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Donate - Michael Karanga Golf Foundation{% endblock %}
+{% block content %}
+<section>
+    <h2>Support Our Mission</h2>
+    <p>Your donation helps us empower young golfers across Africa. Every contribution makes a difference!</p>
+    <form method="post" action="{{ url_for('main.donate') }}" style="max-width:400px;margin:2rem auto;">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" required class="form-control" style="width:100%;margin-bottom:1rem;">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required class="form-control" style="width:100%;margin-bottom:1rem;">
+        <label for="amount">Donation Amount </label>
+        <input type="number" name="amount" id="amount" min="1" required class="form-control" style="width:100%;margin-bottom:1rem;">
+        <button type="submit" style="width:100%;">Donate Now</button>
+    </form>
+    <p style="text-align:center;">Thank you for your generosity!</p>
+</section>
+{% endblock %}

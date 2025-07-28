@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% block title %}Book Nyahururu Event{% endblock %}
+{% block head %}
+<style>
+    body {
+        background: linear-gradient(135deg, #f9d923 0%, #1a4d2e 100%);
+        min-height: 100vh;
+    }
+    .booking-hero-bg {
+        min-height: 100vh;
+        background: url('{{ url_for('static', filename='images/Twende nyahururu na karanga.jpg') }}') center/cover no-repeat;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 0;
+        animation: fadeInBg 1.2s;
+    }
+    @keyframes fadeInBg {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    .booking-hero-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(26,77,46,0.7);
+        z-index: 1;
+        animation: fadeInOverlay 1.5s;
+    }
+    @keyframes fadeInOverlay {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    .booking-card {
+        position: relative;
+        z-index: 2;
+        background: rgba(255,255,255,0.22);
+        box-shadow: 0 12px 32px 0 rgba(31,38,135,0.22), 0 1.5px 8px 0 #f9d92355;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 22px;
+        padding: 2.7rem 2.2rem 2.2rem 2.2rem;
+        max-width: 440px;
+        width: 100%;
+        margin: 0 auto;
+        color: #1a4d2e;
+        border: 2px solid rgba(255,255,255,0.28);
+        animation: floatCard 1.2s cubic-bezier(.4,2,.6,1) 0.2s both;
+        box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18), 0 0 0 4px #f9d92322;
+    }
+    .back-home-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4em;
+        position: absolute;
+        top: 1.2rem;
+        left: 1.2rem;
+        background: rgba(26,77,46,0.92);
+        color: #fff;
+        padding: 0.45em 1.1em;
+        border-radius: 22px;
+        font-weight: 700;
+        font-size: 1rem;
+        text-decoration: none;
+        box-shadow: 0 2px 8px #1a4d2e33;
+        transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+        z-index: 10;
+    }
+    .back-home-btn:hover {
+        background: #f9d923;
+        color: #1a4d2e;
+        box-shadow: 0 4px 16px #f9d92355;
+        text-decoration: none;
+    }
+    @keyframes floatCard {
+        from { transform: translateY(40px) scale(0.97); opacity: 0; }
+        to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .booking-card h2 {
+        color: #1a4d2e;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-size: 2.1rem;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-shadow: 0 2px 8px #fff8;
+        animation: fadeInTitle 1.2s;
+    }
+    @keyframes fadeInTitle {
+        from { opacity: 0; transform: translateY(-20px);}
+        to { opacity: 1; transform: translateY(0);}
+    }
+    .booking-table {
+        width: 100%;
+        margin-bottom: 2rem;
+        border-radius: 12px;
+        overflow: hidden;
+        background: rgba(255,255,255,0.97);
+        box-shadow: 0 2px 8px rgba(26,77,46,0.10);
+        animation: fadeInTable 1.3s;
+    }
+    @keyframes fadeInTable {
+        from { opacity: 0; transform: scale(0.98);}
+        to { opacity: 1; transform: scale(1);}
+    }
+    .booking-table th, .booking-table td {
+        padding: 0.8rem 1.1rem;
+        text-align: left;
+    }
+    .booking-table th {
+        background: linear-gradient(90deg, #f9d923 60%, #ffe97a 100%);
+        color: #1a4d2e;
+        font-weight: 700;
+        font-size: 1.08rem;
+        border-bottom: 1.5px solid #f6f8fa;
+    }
+    .booking-table tr:not(:first-child):hover {
+        background: #f6f8fa;
+        transition: background 0.2s;
+    }
+    .booking-table td {
+        font-size: 1rem;
+    }
+    .booking-table tr:last-child td {
+        font-weight: 700;
+        color: #1a4d2e;
+        background: linear-gradient(90deg, #f9d923 60%, #ffe97a 100%);
+        border-top: 1.5px solid #f6f8fa;
+    }
+    .booking-form label {
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        display: block;
+        color: #1a4d2e;
+        letter-spacing: 0.5px;
+    }
+    .booking-form input, .booking-form textarea {
+        width: 100%;
+        padding: 0.8rem;
+        margin-bottom: 1.2rem;
+        border: 1.5px solid #ddd;
+        border-radius: 7px;
+        font-size: 1.05rem;
+        font-family: inherit;
+        background: rgba(255,255,255,0.92);
+        transition: border 0.2s, box-shadow 0.2s;
+        box-shadow: 0 1px 4px #f9d92322;
+    }
+    .booking-form input:focus, .booking-form textarea:focus {
+        border: 1.5px solid #f9d923;
+        outline: none;
+        box-shadow: 0 0 0 2px #f9d92355;
+    }
+    .booking-form button {
+        width: 100%;
+        background: linear-gradient(90deg, #1a4d2e 60%, #f9d923 100%);
+        color: #fff;
+        border: none;
+        border-radius: 7px;
+        padding: 0.9rem 0;
+        font-size: 1.15rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        box-shadow: 0 2px 12px #1a4d2e33, 0 0 8px #f9d92333;
+        margin-top: 0.7rem;
+        letter-spacing: 1px;
+        text-shadow: 0 1px 4px #1a4d2e22;
+        animation: glowBtn 2s infinite alternate;
+    }
+    @keyframes glowBtn {
+        from { box-shadow: 0 2px 12px #1a4d2e33, 0 0 8px #f9d92333; }
+        to { box-shadow: 0 4px 24px #f9d92399, 0 0 16px #1a4d2e55; }
+    }
+    .booking-form button:hover {
+        background: linear-gradient(90deg, #f9d923 60%, #1a4d2e 100%);
+        color: #1a4d2e;
+        box-shadow: 0 4px 24px #f9d92399, 0 0 16px #1a4d2e55;
+    }
+    @media (max-width: 600px) {
+        .booking-card {
+            padding: 1.2rem 0.5rem;
+        }
+        .booking-table th, .booking-table td {
+            padding: 0.5rem 0.4rem;
+        }
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="booking-hero-bg">
+    <div class="booking-card">
+        <a href="{{ url_for('main.index') }}" class="back-home-btn" title="Back to Home">
+            <span>&larr;</span> Home
+        </a>
+        <h2>Book: Twende Nyahururu na Karanga</h2>
+        <table class="booking-table">
+            <tr><th>Cost Breakdown</th><th>Amount (KES)</th></tr>
+            <tr><td>Green Fee</td><td>2000</td></tr>
+            <tr><td>Casino Fee</td><td>6000</td></tr>
+            <tr><td>Administration Fee</td><td>250</td></tr>
+            <tr><td>Facilitation Fee</td><td>250</td></tr>
+            <tr><td><strong>Total</strong></td><td><strong>8500</strong></td></tr>
+        </table>
+        <form id="bookingForm" class="booking-form">
+            <label for="name">Name of Person Booking For</label>
+            <input type="text" name="name" id="name" required>
+            <label for="phone">Phone Number Used for Payment</label>
+            <input type="text" name="phone" id="phone" required>
+            <label for="preferences">Preferences</label>
+            <textarea name="preferences" id="preferences" rows="3"></textarea>
+            <button type="submit">Submit Booking & Pay</button>
+            <div id="mpesa-message" style="margin-top:1rem;font-weight:600;"></div>
+        </form>
+    </div>
+</div>
+<script>
+document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const preferences = document.getElementById('preferences').value.trim();
+    const messageDiv = document.getElementById('mpesa-message');
+    messageDiv.textContent = "Processing payment, please wait...";
+
+    const response = await fetch("{{ url_for('main.nyahururu_booking') }}", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone, preferences })
+    });
+    const data = await response.json();
+    if (data.success) {
+        messageDiv.textContent = "Check your phone for the Mpesa prompt!";
+    } else {
+        messageDiv.textContent = "Payment failed: " + (data.error || "Please try again.");
+    }
+});
+</script>
+{% endblock %}
