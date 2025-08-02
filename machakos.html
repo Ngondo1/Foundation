@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Twende Machakos - Michael Karanga Golf Foundation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: url('twendeMachakos.jpg') center/cover no-repeat fixed;
+        }
+        header, footer {
+            background: linear-gradient(90deg, #1a4d2e 60%, #f9d923 100%);
+            color: #fff;
+            padding: 28px 0 18px 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(26,77,46,0.08);
+        }
+        nav {
+            margin-top: 10px;
+        }
+        nav a {
+            color: #fff;
+            margin: 0 18px;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 2px;
+        }
+        nav a:hover {
+            color: #f9d923;
+            border-bottom: 2px solid #f9d923;
+        }
+        .main-content {
+            background: rgba(255,255,255,0.96);
+            margin: 36px auto;
+            padding: 32px 18px 28px 18px;
+            max-width: 520px;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(26,77,46,0.13);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .amenities {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .amenity-img {
+            width: 180px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 18px rgba(26,77,46,0.10);
+            background: #eee;
+        }
+        h2 {
+            color: #1a4d2e;
+            font-size: 2rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 28px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(26,77,46,0.08);
+        }
+        .schedule-table th, .schedule-table td {
+            padding: 0.7em 1em;
+            border-bottom: 1px solid #f0f0f0;
+            text-align: left;
+        }
+        .schedule-table th {
+            background: #f9d923;
+            color: #1a4d2e;
+            font-weight: 700;
+        }
+        .schedule-table tr:last-child td {
+            border-bottom: none;
+        }
+        .booking-form {
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
+            background: #f7f7f7;
+            padding: 18px 18px 12px 18px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(26,77,46,0.06);
+        }
+        .booking-form label {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            display: block;
+            color: #1a4d2e;
+        }
+        .booking-form input {
+            width: 100%;
+            padding: 0.7rem;
+            margin-bottom: 1.1rem;
+            border: 1.5px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: rgba(255,255,255,0.85);
+            transition: border 0.2s;
+        }
+        .booking-form input:focus {
+            border: 1.5px solid #1a4d2e;
+            outline: none;
+        }
+        .booking-form button {
+            width: 100%;
+            background: #1a4d2e;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 0.8rem 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            box-shadow: 0 2px 8px rgba(0,77,46,0.07);
+            margin-top: 0.5rem;
+        }
+        .booking-form button:hover {
+            background: #f9d923;
+            color: #1a4d2e;
+        }
+        .error-message {
+            color: #b30000;
+            font-size: 1em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        @media (max-width: 700px) {
+            .main-content {
+                max-width: 98vw;
+                padding: 12px 2vw 18px 2vw;
+            }
+            .amenity-img {
+                width: 98vw;
+                max-width: 98vw;
+                height: 110px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Michael Karanga Golf Foundation</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="machakos.html">Machakos</a>
+        <a href="mombasa.html">Mombasa</a>
+        <a href="nyahururu.html">Nyahururu</a>
+        <a href="training.html">Junior Training</a>
+        <a href="csr.html">CSR & Mentorship</a>
+        <a href="consultation.html">Consultation</a>
+        <a href="history.html">Our History</a>
+    </nav>
+</header>
+
+<main>
+    <div class="main-content">
+        <h2>Twende Machakos na Karanga</h2>
+        <div class="amenities">
+            <img src="MachakosAmmenities.png" alt="Machakos Amenity 1" class="amenity-img">
+            <img src="MachakosAccomodation.png" alt="Machakos Amenity 2" class="amenity-img">
+        </div>
+
+        <table class="schedule-table">
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Activity</th>
+            </tr>
+            <tr>
+                <td>2025-08-10</td>
+                <td>08:00 - 09:00</td>
+                <td>Arrival & Registration</td>
+            </tr>
+            <tr>
+                <td>2025-08-10</td>
+                <td>09:00 - 12:00</td>
+                <td>Golf Coaching Session</td>
+            </tr>
+            <tr>
+                <td>2025-08-10</td>
+                <td>12:00 - 13:00</td>
+                <td>Lunch Break</td>
+            </tr>
+            <tr>
+                <td>2025-08-10</td>
+                <td>13:00 - 16:00</td>
+                <td>Golf Tournament</td>
+            </tr>
+            <tr>
+                <td>2025-08-10</td>
+                <td>16:00 - 17:00</td>
+                <td>Awards & Closing</td>
+            </tr>
+        </table>
+
+        <form class="booking-form" id="bookingForm" autocomplete="off">
+            <div id="error-message" class="error-message"></div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="phone">Phone Number Paying (Mpesa)</label>
+            <input type="text" id="phone" name="phone" required maxlength="10" pattern="^(07|01)\d{8}$" placeholder="07XXXXXXXX or 01XXXXXXXX">
+
+            <button type="submit">Book & Pay</button>
+        </form>
+    </div>
+</main>
+
+<footer>
+    &copy; 2025 Michael Karanga Golf Foundation. All rights reserved.
+</footer>
+
+<script>
+    // Kenyan Mpesa phone validation
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        var phone = document.getElementById('phone').value.trim();
+        var errorDiv = document.getElementById('error-message');
+        var phonePattern = /^(07|01)\d{8}$/;
+        if (!phonePattern.test(phone)) {
+            errorDiv.textContent = "Please enter a valid Kenyan Mpesa number (e.g., 07XXXXXXXX or 01XXXXXXXX)";
+            e.preventDefault();
+        } else {
+            errorDiv.textContent = "";
+        }
+    });
+</script>
+</body>
+</html>

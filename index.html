@@ -1,0 +1,174 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Michael Karanga Golf Foundation - Home</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+            min-height: 100vh;
+        }
+        header, footer {
+            background: linear-gradient(90deg, #1a4d2e 60%, #f9d923 100%);
+            color: #fff;
+            padding: 28px 0 18px 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(26,77,46,0.08);
+        }
+        nav {
+            margin-top: 10px;
+        }
+        nav a {
+            color: #fff;
+            margin: 0 18px;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 2px;
+        }
+        nav a:hover {
+            color: #f9d923;
+            border-bottom: 2px solid #f9d923;
+        }
+        section.card-section {
+            background: #fff;
+            margin: 36px auto;
+            padding: 28px 18px 24px 18px;
+            max-width: 420px;
+            min-width: 0;
+            box-shadow: 0 4px 24px rgba(26,77,46,0.10);
+            border-radius: 18px;
+            transition: box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        section.card-section:hover {
+            box-shadow: 0 8px 32px rgba(26,77,46,0.13);
+        }
+        .carousel-container {
+            width: 100%;
+            max-width: 370px;
+            position: relative;
+            margin-bottom: 18px;
+        }
+        .carousel-image {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(26,77,46,0.10);
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 10px;
+        }
+        .carousel-btn {
+            background: #1a4d2e;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .carousel-btn:hover {
+            background: #f9d923;
+            color: #1a4d2e;
+        }
+        @media (max-width: 600px) {
+            section.card-section {
+                max-width: 98vw;
+                padding: 12px 2vw 18px 2vw;
+            }
+            .carousel-image {
+                height: 160px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Michael Karanga Golf Foundation</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="machakos.html">Machakos</a>
+        <a href="mombasa.html">Mombasa</a>
+        <a href="nyahururu.html">Nyahururu</a>
+        <a href="training.html">Junior Training</a>
+        <a href="csr.html">CSR & Mentorship</a>
+        <a href="consultation.html">Consultation</a>
+        <a href="history.html">Our History</a>
+    </nav>
+</header>
+
+    <section id="home">
+        <h2>Welcome to the Michael Karanga Golf Foundation</h2>
+        <p>
+            Empowering youth and communities through the game of golf.
+        </p>
+    </section>
+
+    <!-- Machakos Card with Carousel -->
+<section id="section1" class="card-section">
+    <h2>Twende Machakos na Karanga</h2>
+    <div class="carousel-container">
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <img src="twendeMachakos.jpg" alt="Twende Machakos" class="carousel-image" style="max-width: 32%;">
+            <img src="MachakosAmmenities.png" alt="Machakos Amenity 1" class="carousel-image" style="max-width: 32%;">
+            <img src="MachakosAccomodation.png" alt="Machakos Amenity 2" class="carousel-image" style="max-width: 32%;">
+        </div>
+    </div>
+    <p>Discover the Machakos event and its amenities. Browse the images above.</p>
+</section>
+    <!-- Mombasa Card -->
+    <section id="section2" class="card-section">
+        <h2>Twende Mombasa na Karanga</h2>
+        <img src="TwendeMalindiLamu.jpg" alt="Twende Mombasa, Malindi and Lamu" class="carousel-image">
+        <p>Experience the coastal golf adventure in Mombasa, Malindi, and Lamu.</p>
+    </section>
+
+    <!-- Nyahururu Card -->
+    <section id="section3" class="card-section">
+        <h2>Twende Nyahururu na Karanga</h2>
+        <img src="TwendeNyahururu.jpg" alt="Twende Nyahururu" class="carousel-image">
+        <p>Join us for the Nyahururu golf event and community outreach.</p>
+    </section>
+
+    <footer>
+        &copy; 2024 Michael Karanga Golf Foundation. All rights reserved.
+    </footer>
+
+    <script>
+        // Simple JS carousel for Machakos images
+        const machakosImages = [
+            "TwendeMachakos.jpg",
+            "MachakosAmmenities.jpg",
+            "MachakosAmmenities(2).jpg"
+        ];
+        let machakosIndex = 0;
+        const machakosImg = document.getElementById('machakos-carousel-img');
+
+        function showMachakosImg(idx) {
+            machakosImg.src = machakosImages[idx];
+        }
+        function prevMachakosImg() {
+            machakosIndex = (machakosIndex - 1 + machakosImages.length) % machakosImages.length;
+            showMachakosImg(machakosIndex);
+        }
+        function nextMachakosImg() {
+            machakosIndex = (machakosIndex + 1) % machakosImages.length;
+            showMachakosImg(machakosIndex);
+        }
+    </script>
+</body>
+</html>
