@@ -1,174 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="bestcss.css" rel="stylesheet">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Michael Karanga Golf Foundation - Home</title>
+    <meta name="description" content="Michael Karanga Golf Foundation empowers youth and communities in Kenya through golf training, mentorship, events, and professional consultation. Founded by Africa's top amateur golfer, Michael Karanga.">
+    <meta name="keywords" content="Golf, Kenya, Michael Karanga, Youth Training, Golf Foundation, Sports Mentorship, Golf Events, CSR, Consultation, Junior Golf, African Golf, Golf Coaching">
+    <meta name="author" content="Michael Karanga Golf Foundation">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="canonical" href="https://www.yourdomain.com/index.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Michael Karanga Golf Foundation">
+    <meta property="og:description" content="Empowering youth and communities in Kenya through golf, mentorship, and professional services.">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:url" content="https://www.yourdomain.com/index.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Michael Karanga Golf Foundation">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Michael Karanga Golf Foundation">
+    <meta name="twitter:description" content="Empowering youth and communities in Kenya through golf, mentorship, and professional services.">
+    <meta name="twitter:image" content="logo.png">
+    <meta name="twitter:site" content="@mkgolffoundation">
+    <meta name="twitter:creator" content="@mkgolffoundation">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
             min-height: 100vh;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0a1a2a, #1a3a4a);
         }
-        header, footer {
-            background: linear-gradient(90deg, #1a4d2e 60%, #f9d923 100%);
+        canvas#starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            
+        }
+        header {
+            
             color: #fff;
-            padding: 28px 0 18px 0;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2vw;
             text-align: center;
-            box-shadow: 0 2px 8px rgba(26,77,46,0.08);
+            position: relative;
+        }
+        .brand {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .brand-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #f9d923;
+            background: #fff;
+            transition: transform 0.3s ease;
+        }
+        .brand-logo:hover {
+            transform: rotate(10deg) scale(1.1);
         }
         nav {
-            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
         }
         nav a {
             color: #fff;
-            margin: 0 18px;
             text-decoration: none;
             font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: color 0.2s;
-            border-bottom: 2px solid transparent;
-            padding-bottom: 2px;
-        }
-        nav a:hover {
-            color: #f9d923;
-            border-bottom: 2px solid #f9d923;
-        }
-        section.card-section {
-            background: #fff;
-            margin: 36px auto;
-            padding: 28px 18px 24px 18px;
-            max-width: 420px;
-            min-width: 0;
-            box-shadow: 0 4px 24px rgba(26,77,46,0.10);
-            border-radius: 18px;
-            transition: box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            font-size: 1.1rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 8px;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
             position: relative;
         }
-        section.card-section:hover {
-            box-shadow: 0 8px 32px rgba(26,77,46,0.13);
-        }
-        .carousel-container {
-            width: 100%;
-            max-width: 370px;
-            position: relative;
-            margin-bottom: 18px;
-        }
-        .carousel-image {
-            width: 100%;
-            height: 240px;
-            object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0 4px 18px rgba(26,77,46,0.10);
-            transition: box-shadow 0.2s, transform 0.2s;
-        }
-        .carousel-controls {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-top: 10px;
-        }
-        .carousel-btn {
-            background: #1a4d2e;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .carousel-btn:hover {
+        nav a:hover, nav a.active {
             background: #f9d923;
             color: #1a4d2e;
+            transform: translateY(-2px);
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background: #f9d923;
+            transition: width 0.3s ease;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+        .hero {
+            
+            color: #fff;
+            padding: 8rem 2vw 6rem;
+            text-align: center;
+            position: relative;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(26, 77, 46, 0.75);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+        }
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #f9d923;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+        .hero-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            font-weight: 600;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        .hero-content p {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            color: #e6f0fa;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        .cta-btn {
+            background: #f9d923;
+            color: #1a4d2e;
+            font-weight: 800;
+            font-size: 1.2rem;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(249, 217, 35, 0.5);
+        }
+        .cta-btn:hover {
+            background: #1a4d2e;
+            color: #f9d923;
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(26, 77, 46, 0.4);
+        }
+        .highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 4rem auto 3rem;
+            padding: 0 2vw;
+        }
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+            padding: 2.5rem 1.5rem;
+            flex: 1 1 280px;
+            min-width: 280px;
+            max-width: 360px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 3px solid #f9d92333;
+            backdrop-filter: blur(5px);
+        }
+        .highlight-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            border-color: #f9d923;
+        }
+        .highlight-card img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 1.2rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+        .highlight-card:hover img {
+            transform: rotate(10deg) scale(1.1);
+        }
+        .highlight-card h3 {
+            color: #f9d923;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .highlight-card p {
+            color: #e6f0fa;
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+        footer {
+            background: linear-gradient(90deg, #1a4d2e 60%, #f9d923 100%);
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+            box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.15);
+        }
+        footer a {
+            color: #f9d923;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: #fff;
+        }
+        @media (max-width: 900px) {
+            .highlights { flex-direction: column; align-items: center; }
+            .highlight-card { padding: 1.5rem 1rem; }
+            .brand-logo { width: 80px; height: 80px; }
+            .brand { top: -50px; }
         }
         @media (max-width: 600px) {
-            section.card-section {
-                max-width: 98vw;
-                padding: 12px 2vw 18px 2vw;
-            }
-            .carousel-image {
-                height: 160px;
-            }
+            .navbar { padding: 1rem 2vw; }
+            .brand-logo { width: 60px; height: 60px; }
+            .brand { top: -40px; }
+            nav { flex-wrap: wrap; gap: 1rem; padding: 1rem 0; }
+            .hero { padding: 4rem 2vw 3rem; }
+            .hero-content { padding: 1.5rem; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content h2 { font-size: 1.4rem; }
+            .hero-content p { font-size: 1.1rem; }
+            .cta-btn { padding: 0.8rem 2rem; }
         }
     </style>
 </head>
 <body>
-<header>
-    <h1>Michael Karanga Golf Foundation</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="machakos.html">Machakos</a>
-        <a href="mombasa.html">Mombasa</a>
-        <a href="nyahururu.html">Nyahururu</a>
-        <a href="training.html">Junior Training</a>
-        <a href="csr.html">CSR & Mentorship</a>
-        <a href="consultation.html">Consultation</a>
-        <a href="history.html">Our History</a>
-    </nav>
-</header>
-
-    <section id="home">
-        <h2>Welcome to the Michael Karanga Golf Foundation</h2>
-        <p>
-            Empowering youth and communities through the game of golf.
-        </p>
-    </section>
-
-    <!-- Machakos Card with Carousel -->
-<section id="section1" class="card-section">
-    <h2>Twende Machakos na Karanga</h2>
-    <div class="carousel-container">
-        <div style="display: flex; gap: 10px; justify-content: center;">
-            <img src="twendeMachakos.jpg" alt="Twende Machakos" class="carousel-image" style="max-width: 32%;">
-            <img src="MachakosAmmenities.png" alt="Machakos Amenity 1" class="carousel-image" style="max-width: 32%;">
-            <img src="MachakosAccomodation.png" alt="Machakos Amenity 2" class="carousel-image" style="max-width: 32%;">
+    <canvas id="starfield"></canvas>
+    <header>
+        <div class="navbar">
+            <div class="brand">
+                <div id="orbit-logo-container">
+                    <img src="logo.png" alt="MK Golf Logo" class="brand-logo" id="orbit-logo">
+                </div>
+            </div>
+            <nav>
+                <a href="index.html" class="active">Home</a>
+                <a href="machakos.html">Machakos</a>
+                <a href="mombasa.html">Mombasa</a>
+                <a href="nyahururu.html">Nyahururu</a>
+                <a href="training.html">Junior Training</a>
+                <a href="csr.html">CSR & Mentorship</a>
+                <a href="consultation.html">Consultation</a>
+                <a href="history.html">Our History</a>
+            </nav>
         </div>
-    </div>
-    <p>Discover the Machakos event and its amenities. Browse the images above.</p>
-</section>
-    <!-- Mombasa Card -->
-    <section id="section2" class="card-section">
-        <h2>Twende Mombasa na Karanga</h2>
-        <img src="TwendeMalindiLamu.jpg" alt="Twende Mombasa, Malindi and Lamu" class="carousel-image">
-        <p>Experience the coastal golf adventure in Mombasa, Malindi, and Lamu.</p>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Michael Karanga Golf Foundation</h1>
+            <h2>Kenya's Top Amateur Golfer Leading Africa's Golf Revolution</h2>
+            <p>
+                Founded by Michael Karanga, ranked among Africa's elite in the WAGR, our foundation empowers youth and communities through golf, fostering talent, inclusivity, and excellence.
+            </p>
+            <a href="training.html" class="cta-btn">Join Our Journey</a>
+        </div>
     </section>
 
-    <!-- Nyahururu Card -->
-    <section id="section3" class="card-section">
-        <h2>Twende Nyahururu na Karanga</h2>
-        <img src="TwendeNyahururu.jpg" alt="Twende Nyahururu" class="carousel-image">
-        <p>Join us for the Nyahururu golf event and community outreach.</p>
+    <section class="highlights">
+        <div class="highlight-card">
+            <img src="junior-training.png" alt="Junior golfer practicing swing">
+            <h3>Junior Training</h3>
+            <p>Over 1,000 young golfers coached in our inclusive programs for both boys and girls.</p>
+        </div>
+        <div class="highlight-card">
+            <img src="csr.png" alt="Community event with golfers">
+            <h3>CSR & Mentorship</h3>
+            <p>Free clinics, motivational talks, and sponsorship for elite golfers from all backgrounds.</p>
+        </div>
+        <div class="highlight-card">
+            <img src="consultation.png" alt="Event planning consultation">
+            <h3>Consultation Services</h3>
+            <p>Expert event planning, digital marketing, graphics design, and administration support.</p>
+        </div>
+        <div class="highlight-card">
+            <img src="TopAmatuer.png" alt="Trophy with golf clubs and laurel wreath">
+            <h3>Our Achievements</h3>
+            <p>Explore our legacy of tournament wins and community impact led by Michael Karanga.</p>
+        </div>
     </section>
 
     <footer>
-        &copy; 2024 Michael Karanga Golf Foundation. All rights reserved.
+        &copy; 2025 Michael Karanga Golf Foundation. All rights reserved. <a href="mailto:info@mkgolf.org">Contact Us</a>
     </footer>
 
+    <!-- EA Sports Intro Script -->
+    <script src="ea-intro.js"></script>
     <script>
-        // Simple JS carousel for Machakos images
-        const machakosImages = [
-            "TwendeMachakos.jpg",
-            "MachakosAmmenities.jpg",
-            "MachakosAmmenities(2).jpg"
-        ];
-        let machakosIndex = 0;
-        const machakosImg = document.getElementById('machakos-carousel-img');
+        // Orbiting logo animation
+        const orbitLogo = document.getElementById('orbit-logo');
+        let angle = 0;
+        const radius = 40; // px, adjust for orbit size
 
-        function showMachakosImg(idx) {
-            machakosImg.src = machakosImages[idx];
+        function animateLogo() {
+            angle += 0.02; // speed
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+            orbitLogo.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`;
+            requestAnimationFrame(animateLogo);
         }
-        function prevMachakosImg() {
-            machakosIndex = (machakosIndex - 1 + machakosImages.length) % machakosImages.length;
-            showMachakosImg(machakosIndex);
+        animateLogo();
+    </script>
+    <script>
+        // Starfield background
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+        function resizeStarfield() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initStars();
         }
-        function nextMachakosImg() {
-            machakosIndex = (machakosIndex + 1) % machakosImages.length;
-            showMachakosImg(machakosIndex);
+        window.addEventListener('resize', resizeStarfield);
+
+        const stars = [];
+        const numStars = 200;
+
+        function Star() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.z = Math.random() * canvas.width;
+            this.speed = 2 + Math.random() * 3;
+            this.radius = Math.random() * 1.5;
+
+            this.update = function() {
+                this.z -= this.speed;
+                if (this.z <= 0) {
+                    this.z = canvas.width;
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                }
+            };
+
+            this.draw = function() {
+                const px = (this.x - canvas.width / 2) * (canvas.width / this.z) + canvas.width / 2;
+                const py = (this.y - canvas.height / 2) * (canvas.width / this.z) + canvas.height / 2;
+                const scale = canvas.width / this.z;
+                const alpha = Math.max(0, 1 - this.z / canvas.width);
+
+                ctx.beginPath();
+                ctx.arc(px, py, this.radius * scale, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                ctx.fill();
+            };
         }
+
+        function initStars() {
+            stars.length = 0;
+            for (let i = 0; i < numStars; i++) {
+                stars.push(new Star());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        resizeStarfield();
+        animate();
     </script>
 </body>
 </html>

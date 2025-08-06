@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="bestcss.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>CSR & Mentorship - Michael Karanga Golf Foundation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0a1a2a, #1a3a4a);
+        }
+        canvas#starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+        header {
+            color: #fff;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            background: transparent;
+        }
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2vw;
+            text-align: center;
+            position: relative;
+        }
+        .brand {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .brand-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #f9d923;
+            background: #fff;
+            transition: transform 0.3s ease;
+        }
+        .brand-logo:hover {
+            transform: rotate(10deg) scale(1.1);
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 8px;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            position: relative;
+        }
+        nav a:hover, nav a.active {
+            background: #f9d923;
+            color: #1a4d2e;
+            transform: translateY(-2px);
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background: #f9d923;
+            transition: width 0.3s ease;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+        .main-content {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 0.8s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h2 {
+            color: #f9d923;
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 1.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .csr-section {
+            margin-bottom: 2rem;
+        }
+        .csr-section ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .csr-section li {
+            margin-bottom: 0.5rem;
+            font-size: 1.08rem;
+        }
+        .highlight {
+            color: #f9d923;
+            font-weight: bold;
+        }
+        .impact-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 1.5rem;
+        }
+        .impact-card {
+            background: rgba(255,255,255,0.12);
+            border-radius: 18px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+            padding: 2rem 1.5rem;
+            min-width: 220px;
+            max-width: 320px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 3px solid #f9d92333;
+            backdrop-filter: blur(5px);
+        }
+        .impact-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            border-color: #f9d923;
+        }
+        .impact-card h3 {
+            color: #f9d923;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .impact-card p {
+            color: #e6f0fa;
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+        footer {
+            background: linear-gradient(90deg, #0a1a2a 60%, #f9d923 100%);
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+            box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.15);
+        }
+        footer a {
+            color: #f9d923;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: #fff;
+        }
+        @media (max-width: 900px) {
+            .impact-cards { flex-direction: column; align-items: center; }
+            .impact-card { padding: 1.5rem 1rem; }
+            .brand-logo { width: 80px; height: 80px; }
+            .brand { top: -50px; }
+        }
+        @media (max-width: 600px) {
+            .navbar { padding: 1rem 2vw; }
+            .brand-logo { width: 60px; height: 60px; }
+            .brand { top: -40px; }
+            nav { flex-wrap: wrap; gap: 1rem; padding: 1rem 0; }
+            .main-content { padding: 1rem; }
+            h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+    <header id="main-header">
+        <div class="navbar">
+            <div class="brand">
+                <img src="logo.png" alt="MK Golf Logo" class="brand-logo">
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="machakos.html">Machakos</a>
+                <a href="mombasa.html">Mombasa</a>
+                <a href="nyahururu.html">Nyahururu</a>
+                <a href="training.html">Junior Training</a>
+                <a href="csr.html" class="active">CSR & Mentorship</a>
+                <a href="consultation.html">Consultation</a>
+                <a href="history.html">Our History</a>
+            </nav>
+        </div>
+    </header>
+
+<main>
+    <div class="main-content" style="margin-top:2.5rem; margin-bottom:2.5rem; border:2.5px solid #f9d92355; padding:2.5rem 2rem 2.5rem 2rem;">
+        <h2 style="margin-bottom:2.2rem;">CSR & Mentorship</h2>
+        <div class="csr-section" style="margin-bottom:2.5rem;">
+            <p style="margin-bottom:1.2rem;">
+                The Michael Karanga Golf Foundation is passionate about giving back to the community and nurturing the next generation of golfers. Our CSR and mentorship initiatives include:
+            </p>
+            <ul style="margin-left:1.5rem;">
+                <li style="margin-bottom:0.7rem;"><span class="highlight">Inspirational Talks:</span> Michael Karanga gives motivational talks to students in schools and during long holiday training sessions, inspiring them to pursue excellence both in golf and in life.</li>
+                <li style="margin-bottom:0.7rem;"><span class="highlight">Free Golf Clinics:</span> The foundation organizes free golf clinics, providing access to golf lessons and free golf balls for young aspiring players.</li>
+                <li style="margin-bottom:0.7rem;"><span class="highlight">Sponsorship for Elite Golfers:</span> We sponsor talented golfers, especially those from disabled backgrounds, giving them opportunities to compete and excel.</li>
+            </ul>
+        </div>
+
+        <div class="impact-cards" style="gap:2.2rem; margin-bottom:2.5rem;">
+            <div class="impact-card" style="padding:2.2rem 1.7rem; border:2.5px solid #f9d92355;">
+                <h3>Motivational Talks</h3>
+                <p>Empowering students with life skills and confidence through school visits and holiday sessions.</p>
+            </div>
+            <div class="impact-card" style="padding:2.2rem 1.7rem; border:2.5px solid #f9d92355;">
+                <h3>Free Golf Clinics</h3>
+                <p>Removing barriers by offering free lessons and equipment to all interested youth.</p>
+            </div>
+            <div class="impact-card" style="padding:2.2rem 1.7rem; border:2.5px solid #f9d92355;">
+                <h3>Elite Sponsorship</h3>
+                <p>Supporting and sponsoring elite golfers from underprivileged and disabled backgrounds.</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    &copy; 2024 Michael Karanga Golf Foundation. All rights reserved.
+</footer>
+
+<script>
+// Starfield background animation
+const canvas = document.getElementById('starfield');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    function resizeStarfield() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initStars();
+    }
+    window.addEventListener('resize', resizeStarfield);
+    const stars = [];
+    const numStars = 200;
+    function Star() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.z = Math.random() * canvas.width;
+        this.speed = 2 + Math.random() * 3;
+        this.radius = Math.random() * 1.5;
+        this.update = function() {
+            this.z -= this.speed;
+            if (this.z <= 0) {
+                this.z = canvas.width;
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+            }
+        };
+        this.draw = function() {
+            const px = (this.x - canvas.width / 2) * (canvas.width / this.z) + canvas.width / 2;
+            const py = (this.y - canvas.height / 2) * (canvas.width / this.z) + canvas.height / 2;
+            const scale = canvas.width / this.z;
+            const alpha = Math.max(0, 1 - this.z / canvas.width);
+            ctx.beginPath();
+            ctx.arc(px, py, this.radius * scale, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+            ctx.fill();
+        };
+    }
+    function initStars() {
+        stars.length = 0;
+        for (let i = 0; i < numStars; i++) {
+            stars.push(new Star());
+        }
+    }
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(star => {
+            star.update();
+            star.draw();
+        });
+        requestAnimationFrame(animate);
+    }
+    resizeStarfield();
+    animate();
+}
+
+// Hide header on scroll down, show on scroll up
+let lastScrollY = window.scrollY;
+const header = document.getElementById('main-header');
+let ticking = false;
+window.addEventListener('scroll', function() {
+    if (!ticking) {
+        window.requestAnimationFrame(function() {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > lastScrollY && currentScrollY > 80) {
+                header.style.transform = 'translateY(-120%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+            lastScrollY = currentScrollY;
+            ticking = false;
+        });
+        ticking = true;
+    }
+});
+</script>
+</body>
+</html>
+<script src="intro.js"></script>

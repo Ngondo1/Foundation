@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="bestcss.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Twende Mombasa - Michael Karanga Golf Foundation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0a1a2a, #1a3a4a);
+        }
+        canvas#starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+        header {
+            color: #fff;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            background: transparent;
+        }
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2vw;
+            text-align: center;
+            position: relative;
+        }
+        .brand {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .brand-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #f9d923;
+            background: #fff;
+            transition: transform 0.3s ease;
+        }
+        .brand-logo:hover {
+            transform: rotate(10deg) scale(1.1);
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 8px;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            position: relative;
+        }
+        nav a:hover, nav a.active {
+            background: #f9d923;
+            color: #1a4d2e;
+            transform: translateY(-2px);
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background: #f9d923;
+            transition: width 0.3s ease;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+        .main-content {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 0.8s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h2 {
+            color: #f9d923;
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 1.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .amenities {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .amenity-img {
+            width: 250px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .amenity-img:hover {
+            transform: scale(1.05);
+        }
+        .schedule-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 2rem;
+            background: rgba(255,255,255,0.10);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .schedule-table th, .schedule-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            color: #fff;
+        }
+        .schedule-table th {
+            background: #f9d923;
+            color: #1a4d2e;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .schedule-table tr:last-child td {
+            border-bottom: none;
+        }
+        .schedule-table tr:hover {
+            background: rgba(249, 217, 35, 0.05);
+        }
+        .booking-form {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.10);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            animation: slideUp 0.5s ease-out;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .booking-form label {
+            font-weight: 600;
+            color: #f9d923;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .booking-form input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .booking-form input:focus {
+            border-color: #f9d923;
+            box-shadow: 0 0 8px rgba(249, 217, 35, 0.2);
+            outline: none;
+        }
+        .booking-form button {
+            width: 100%;
+            background: #f9d923;
+            color: #1a4d2e;
+            border: none;
+            border-radius: 6px;
+            padding: 0.9rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .booking-form button:hover {
+            background: #1a4d2e;
+            color: #f9d923;
+            transform: translateY(-2px);
+        }
+        .error-message {
+            color: #b30000;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            background: #ffebee;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        footer {
+            background: linear-gradient(90deg, #0a1a2a 60%, #f9d923 100%);
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+            box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.15);
+        }
+        footer a {
+            color: #f9d923;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: #fff;
+        }
+        @media (max-width: 900px) {
+            .amenities { flex-direction: column; align-items: center; }
+            .amenity-img { width: 90vw; max-width: 320px; }
+            .main-content { padding: 1.5rem; }
+            .brand-logo { width: 80px; height: 80px; }
+            .brand { top: -50px; }
+        }
+        @media (max-width: 600px) {
+            .navbar { padding: 1rem 2vw; }
+            .brand-logo { width: 60px; height: 60px; }
+            .brand { top: -40px; }
+            nav { flex-wrap: wrap; gap: 1rem; padding: 1rem 0; }
+            .main-content { padding: 1rem; }
+            h2 { font-size: 1.3rem; }
+        }
+    </style>
+    <style>
+        @media (max-width: 768px) {
+            .main-content {
+                max-width: 100%;
+                height: auto;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+            nav a {
+                margin: 0 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+    <header>
+        <div class="navbar">
+            <div class="brand">
+                <img src="logo.png" alt="Michael Karanga Golf Foundation Logo" class="brand-logo">
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="machakos.html">Machakos</a>
+                <a href="mombasa.html" class="active">Mombasa</a>
+                <a href="nyahururu.html">Nyahururu</a>
+                <a href="training.html">Junior Training</a>
+                <a href="csr.html">CSR & Mentorship</a>
+                <a href="consultation.html">Consultation</a>
+                <a href="history.html">Our History</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="main-content">
+            <h2>Twende Mombasa na Karanga</h2>
+            <div class="amenities">
+                <img src="MombasaGreen.png" alt="Mombasa Green" class="amenity-img">
+                <img src="Malindi.png" alt="Malindi" class="amenity-img">
+                <img src="Lamu.png" alt="Lamu" class="amenity-img">
+            </div>
+            <table class="schedule-table">
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Activity</th>
+                </tr>
+                <tr>
+                    <td>2025-10-12</td>
+                    <td>08:00 - 09:00</td>
+                    <td>Arrival & Registration</td>
+                </tr>
+                <tr>
+                    <td>2025-10-12</td>
+                    <td>09:00 - 12:00</td>
+                    <td>Golf Coaching Session</td>
+                </tr>
+                <tr>
+                    <td>2025-10-12</td>
+                    <td>12:00 - 13:00</td>
+                    <td>Lunch Break</td>
+                </tr>
+                <tr>
+                    <td>2025-10-12</td>
+                    <td>13:00 - 16:00</td>
+                    <td>Golf Tournament</td>
+                </tr>
+                <tr>
+                    <td>2025-10-12</td>
+                    <td>16:00 - 17:00</td>
+                    <td>Awards & Closing</td>
+                </tr>
+            </table>
+            <form class="booking-form" id="bookingForm" autocomplete="off">
+                <div id="error-message" class="error-message"></div>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+                <label for="phone">Phone Number Paying (Mpesa)</label>
+                <input type="text" id="phone" name="phone" required maxlength="10" pattern="^(07|01)\d{8}$" placeholder="07XXXXXXXX or 01XXXXXXXX">
+                <button type="submit">Book & Pay</button>
+            </form>
+        </div>
+    </main>
+    <footer>
+        &copy; 2024 Michael Karanga Golf Foundation. All rights reserved.
+    </footer>
+    <script src="intro.js"></script>
+    <script>
+    // Kenyan Mpesa phone validation
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        var phone = document.getElementById('phone').value.trim();
+        var errorDiv = document.getElementById('error-message');
+        var phonePattern = /^(07|01)\d{8}$/;
+        if (!phonePattern.test(phone)) {
+            errorDiv.textContent = "Please enter a valid Kenyan Mpesa number (e.g., 07XXXXXXXX or 01XXXXXXXX)";
+            e.preventDefault();
+        } else {
+            errorDiv.textContent = "";
+        }
+    });
+    // Starfield background (reuse from other pages if needed)
+    const canvas = document.getElementById('starfield');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        let w = window.innerWidth, h = window.innerHeight;
+        function resizeStarfield() {
+            w = window.innerWidth; h = window.innerHeight;
+            canvas.width = w; canvas.height = h;
+        }
+        function createStars() {
+            stars = [];
+            for (let i = 0; i < 120; i++) {
+                stars.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    r: Math.random() * 1.2 + 0.3,
+                    speed: Math.random() * 0.25 + 0.05,
+                    alpha: Math.random() * 0.5 + 0.5
+                });
+            }
+        }
+        function drawStars() {
+            ctx.clearRect(0, 0, w, h);
+            for (const s of stars) {
+                ctx.save();
+                ctx.globalAlpha = s.alpha;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
+                ctx.fillStyle = '#fff';
+                ctx.shadowColor = '#fff';
+                ctx.shadowBlur = 8;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+        function animateStars() {
+            for (const s of stars) {
+                s.x += s.speed;
+                if (s.x > w) s.x = 0;
+            }
+            drawStars();
+            requestAnimationFrame(animateStars);
+        }
+        window.addEventListener('resize', () => {
+            resizeStarfield();
+            createStars();
+        });
+        resizeStarfield();
+        createStars();
+        animateStars();
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="bestcss.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Consultation Services - Michael Karanga Golf Foundation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0a1a2a, #1a3a4a);
+        }
+        canvas#starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+        header {
+            color: #fff;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            background: transparent;
+        }
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2vw;
+            text-align: center;
+            position: relative;
+        }
+        .brand {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .brand-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #f9d923;
+            background: #fff;
+            transition: transform 0.3s ease;
+        }
+        .brand-logo:hover {
+            transform: rotate(10deg) scale(1.1);
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 8px;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            position: relative;
+        }
+        nav a:hover, nav a.active {
+            background: #f9d923;
+            color: #1a4d2e;
+            transform: translateY(-2px);
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background: #f9d923;
+            transition: width 0.3s ease;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+        .main-content {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 0.8s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h2 {
+            color: #f9d923;
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 1.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .consult-section {
+            margin-bottom: 2rem;
+        }
+        .consult-section ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .consult-section li {
+            margin-bottom: 0.5rem;
+            font-size: 1.08rem;
+        }
+        .highlight {
+            color: #f9d923;
+            font-weight: bold;
+        }
+        .service-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 1.5rem;
+        }
+        .service-card {
+            background: rgba(255,255,255,0.12);
+            border-radius: 18px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+            padding: 2rem 1.5rem;
+            min-width: 220px;
+            max-width: 320px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 3px solid #f9d92333;
+            backdrop-filter: blur(5px);
+        }
+        .service-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            border-color: #f9d923;
+        }
+        .service-card h3 {
+            color: #f9d923;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .service-card p {
+            color: #e6f0fa;
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+        .contact-section {
+            margin-top: 2rem;
+            background: rgba(255,255,255,0.10);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .contact-section h3 {
+            color: #f9d923;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        .contact-section p {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #e6f0fa;
+        }
+        .contact-section a {
+            color: #f9d923;
+            font-weight: bold;
+            text-decoration: underline;
+            margin: 0 0.5rem;
+            transition: color 0.3s ease;
+        }
+        .contact-section a:hover {
+            color: #fff;
+        }
+        footer {
+            background: linear-gradient(90deg, #0a1a2a 60%, #f9d923 100%);
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+            box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.15);
+        }
+        footer a {
+            color: #f9d923;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: #fff;
+        }
+        @media (max-width: 900px) {
+            .service-cards { flex-direction: column; align-items: center; }
+            .service-card { padding: 1.5rem 1rem; }
+            .brand-logo { width: 80px; height: 80px; }
+            .brand { top: -50px; }
+        }
+        @media (max-width: 600px) {
+            .navbar { padding: 1rem 2vw; }
+            .brand-logo { width: 60px; height: 60px; }
+            .brand { top: -40px; }
+            nav { flex-wrap: wrap; gap: 1rem; padding: 1rem 0; }
+            .main-content { padding: 1rem; }
+            h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="starfield"></canvas>
+    <header>
+        <div class="navbar">
+            <div class="brand">
+                <img src="logo.png" alt="MK Golf Logo" class="brand-logo">
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="machakos.html">Machakos</a>
+                <a href="mombasa.html">Mombasa</a>
+                <a href="nyahururu.html">Nyahururu</a>
+                <a href="training.html">Junior Training</a>
+                <a href="csr.html">CSR & Mentorship</a>
+                <a href="consultation.html" class="active">Consultation</a>
+                <a href="history.html">Our History</a>
+            </nav>
+        </div>
+    </header>
+
+<main>
+    <div class="main-content" style="margin-top:2.5rem; margin-bottom:2.5rem; border:2.5px solid #f9d92355; padding:2.5rem 2rem 2.5rem 2rem;">
+        <h2 style="margin-bottom:2.2rem;">Consultation & Professional Services</h2>
+        <div class="consult-section" style="margin-bottom:2.5rem;">
+            <p style="margin-bottom:1.2rem;">
+                The Michael Karanga Golf Foundation offers a range of professional consultation services to support individuals, organizations, and events. Our expertise includes:
+            </p>
+            <ul style="margin-left:1.5rem;">
+                <li style="margin-bottom:0.7rem;"><span class="highlight">Digital Marketing:</span> Social media management, online campaigns, and brand growth strategies.</li>
+                <li style="margin-bottom:0.7rem;"><span class="highlight">Graphics Design:</span> Creative design for posters, banners, event materials, and digital content.</li>
+                <li style="margin-bottom:0.7rem;"><span class="highlight">Event Planning & Administration:</span> End-to-end planning, logistics, and management for golf tournaments, corporate events, and community programs.</li>
+                <li style="margin-bottom:0.7rem;"><span class="highlight">Golf Coaching & Clinics:</span> Professional coaching for individuals, schools, and organizations.</li>
+                <li style="margin-bottom:0.7rem;"><span class="highlight">Mentorship & Sponsorship:</span> Guidance and support for elite golfers, including those from underprivileged and disabled backgrounds.</li>
+            </ul>
+        </div>
+
+        <div class="service-cards" style="gap:2.2rem; margin-bottom:2.5rem;">
+            <div class="service-card" style="padding:2.2rem 1.7rem; border:2.5px solid #f9d92355;">
+                <h3>Digital Marketing</h3>
+                <p>Grow your brand and reach your audience with our expert digital marketing solutions.</p>
+            </div>
+            <div class="service-card" style="padding:2.2rem 1.7rem; border:2.5px solid #f9d92355;">
+                <h3>Graphics Design</h3>
+                <p>Professional and creative designs for all your event and promotional needs.</p>
+            </div>
+            <div class="service-card" style="padding:2.2rem 1.7rem; border:2.5px solid #f9d92355;">
+                <h3>Event Planning</h3>
+                <p>Seamless planning and administration for golf and community events.</p>
+            </div>
+            <div class="service-card" style="padding:2.2rem 1.7rem; border:2.5px solid #f9d92355;">
+                <h3>Golf Coaching</h3>
+                <p>Expert coaching and clinics for all ages and skill levels.</p>
+            </div>
+            <div class="service-card" style="padding:2.2rem 1.7rem; border:2.5px solid #f9d92355;">
+                <h3>Mentorship & Sponsorship</h3>
+                <p>Supporting and guiding elite golfers, including those from disadvantaged backgrounds.</p>
+            </div>
+        </div>
+
+        <div class="contact-section" style="margin-top:2.5rem; border:2.5px solid #f9d92355; padding:1.7rem;">
+            <h3>Contact Us for Consultation</h3>
+            <p>To request our services or learn more, call us:</p>
+            <p>
+                <a href="tel:0795555460">0795 555 460</a> or
+                <a href="tel:0701134074">0701 134 074</a>
+            </p>
+        </div>
+    </div>
+</main>
+
+<footer>
+    &copy; 2024 Michael Karanga Golf Foundation. All rights reserved.
+</footer>
+
+<script>
+// Starfield background animation
+const canvas = document.getElementById('starfield');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    function resizeStarfield() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initStars();
+    }
+    window.addEventListener('resize', resizeStarfield);
+    const stars = [];
+    const numStars = 200;
+    function Star() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.z = Math.random() * canvas.width;
+        this.speed = 2 + Math.random() * 3;
+        this.radius = Math.random() * 1.5;
+        this.update = function() {
+            this.z -= this.speed;
+            if (this.z <= 0) {
+                this.z = canvas.width;
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+            }
+        };
+        this.draw = function() {
+            const px = (this.x - canvas.width / 2) * (canvas.width / this.z) + canvas.width / 2;
+            const py = (this.y - canvas.height / 2) * (canvas.width / this.z) + canvas.height / 2;
+            const scale = canvas.width / this.z;
+            const alpha = Math.max(0, 1 - this.z / canvas.width);
+            ctx.beginPath();
+            ctx.arc(px, py, this.radius * scale, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+            ctx.fill();
+        };
+    }
+    function initStars() {
+        stars.length = 0;
+        for (let i = 0; i < numStars; i++) {
+            stars.push(new Star());
+        }
+    }
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(star => {
+            star.update();
+            star.draw();
+        });
+        requestAnimationFrame(animate);
+    }
+    resizeStarfield();
+    animate();
+}
+</script>
+</body>
+</html>
+
+<script src="intro.js"></script>

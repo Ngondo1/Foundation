@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Junior Training - Michael Karanga Golf Foundation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            background: #181c2b;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        #starfield {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        header {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(12px) saturate(180%);
+            color: #fff;
+            padding: 1.5rem 0 1rem 0;
+            text-align: center;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+            border-bottom: 1.5px solid rgba(255,255,255,0.08);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            z-index: 10;
+            transition: transform 0.4s cubic-bezier(.4,0,.2,1), background 0.3s;
+        }
+        header.hide {
+            transform: translateY(-120%);
+        }
+        header.show {
+            transform: translateY(0);
+        }
+        header h1 {
+            font-size: 2.1rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.12);
+        }
+        nav {
+            margin-top: 1rem;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: color 0.3s, transform 0.2s;
+            position: relative;
+        }
+        nav a:hover {
+            color: #ffe066;
+            transform: translateY(-2px) scale(1.05);
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #ffe066;
+            transition: width 0.3s;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+        .main-content {
+            max-width: 900px;
+            margin: 6.5rem auto 2rem auto;
+            padding: 2.8rem 2.2rem 2.2rem 2.2rem;
+            background: rgba(255,255,255,0.82);
+            border-radius: 22px;
+            box-shadow: 0 12px 40px 0 rgba(24,28,43,0.22), 0 1.5px 8px 0 rgba(24,28,43,0.10);
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 0.5s cubic-bezier(.4,0,.2,1);
+            backdrop-filter: blur(10px) saturate(160%);
+            border: 1.5px solid rgba(255,255,255,0.18);
+        }
+        @media (max-width: 768px) {
+            .main-content {
+                margin: 5.5rem 0.5rem 1rem 0.5rem;
+                padding: 1.2rem 0.5rem 1rem 0.5rem;
+            }
+        }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h2 {
+            color: #222a3a;
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+        .program-list {
+            margin-bottom: 2rem;
+        }
+        .program-list ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .program-list li {
+            margin-bottom: 0.5rem;
+            font-size: 1.08rem;
+        }
+        .highlight {
+            color: #ffe066;
+            font-weight: bold;
+        }
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-bottom: 2rem;
+            gap: 1.5rem;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.85);
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(24,28,43,0.10);
+            padding: 1.2rem 2rem;
+            min-width: 180px;
+            text-align: center;
+        }
+        .stat-card h3 {
+            color: #222a3a;
+            font-size: 2rem;
+            margin-bottom: 0.3rem;
+        }
+        .stat-card p {
+            color: #666;
+            font-size: 1rem;
+        }
+        .schedule-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 2rem;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(24,28,43,0.07);
+        }
+        .schedule-table th, .schedule-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .schedule-table th {
+            background: #ffe066;
+            color: #222a3a;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .schedule-table tr:last-child td {
+            border-bottom: none;
+        }
+        .schedule-table tr:hover {
+            background: #f9f9f9;
+        }
+        .contact-section {
+            margin-top: 2rem;
+            background: rgba(255,255,255,0.85);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(24,28,43,0.08);
+            text-align: center;
+        }
+        .contact-section h3 {
+            color: #222a3a;
+            margin-bottom: 0.5rem;
+        }
+        .contact-section p {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .contact-section a {
+            color: #222a3a;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+        .contact-section a:hover {
+            color: #ffe066;
+        }
+        footer {
+            background: rgba(255,255,255,0.10);
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+            border-top: 1.5px solid rgba(255,255,255,0.08);
+        }
+        @media (max-width: 768px) {
+            .main-content {
+                margin: 5.5rem 0.5rem 1rem 0.5rem;
+                padding: 1rem;
+            }
+            .stat-card {
+                min-width: 120px;
+                padding: 1rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            nav a {
+                margin: 0 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+    <header class="show">
+        <h1>Michael Karanga Golf Foundation</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="machakos.html">Machakos</a>
+            <a href="mombasa.html">Mombasa</a>
+            <a href="nyahururu.html">Nyahururu</a>
+            <a href="training.html">Junior Training</a>
+            <a href="csr.html">CSR & Mentorship</a>
+            <a href="consultation.html">Consultation</a>
+            <a href="history.html">Our History</a>
+        </nav>
+    </header>
+    <main>
+        <div class="main-content">
+            <h2>Junior Golf Training Programs</h2>
+            <div class="program-list">
+                <p>
+                    The Michael Karanga Golf Foundation is committed to propagating golf among young, upcoming players—both male and female—across Kenya. Our training programs reach over <span class="highlight">1,000 students</span> and are led by dedicated coaches, players, and staff.
+                </p>
+                <ul>
+                    <li><strong>MKGF August Holiday Training Program</strong> (3 weeks: <span class="highlight">4th–22nd August</span>)</li>
+                    <li><strong>Damacrest Schools Training Program</strong></li>
+                    <li><strong>MKGF Kiambu County Interschool Training</strong></li>
+                </ul>
+            </div>
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>1,000+</h3>
+                    <p>Students Coached</p>
+                </div>
+                <div class="stat-card">
+                    <h3>10+</h3>
+                    <p>Coaches & Staff</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Equal</h3>
+                    <p>Male & Female Participation</p>
+                </div>
+            </div>
+            <h2>August Holiday Training Schedule</h2>
+            <table class="schedule-table">
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Activity</th>
+                </tr>
+                <tr>
+                    <td>4th Aug</td>
+                    <td>09:00 - 12:00</td>
+                    <td>Opening & Orientation</td>
+                </tr>
+                <tr>
+                    <td>5th–21st Aug</td>
+                    <td>09:00 - 12:00</td>
+                    <td>Daily Golf Training Sessions</td>
+                </tr>
+                <tr>
+                    <td>22nd Aug</td>
+                    <td>09:00 - 15:00</td>
+                    <td>Competition in Honour of the Late Brigit Njoki</td>
+                </tr>
+            </table>
+            <div class="contact-section">
+                <h3>Contact Us for Training Programs</h3>
+                <p>Have questions or want to join our training? Call us:</p>
+                <p>
+                    <a href="tel:0795555460">0795 555 460</a> or
+                    <a href="tel:0701134074">0701 134 074</a>
+                </p>
+            </div>
+        </div>
+    </main>
+    <footer>
+        &copy; 2024 Michael Karanga Golf Foundation. All rights reserved.
+    </footer>
+    <script>
+    // Starfield background
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    let w = window.innerWidth, h = window.innerHeight;
+    function resizeStarfield() {
+        w = window.innerWidth; h = window.innerHeight;
+        canvas.width = w; canvas.height = h;
+    }
+    function createStars() {
+        stars = [];
+        for (let i = 0; i < 120; i++) {
+            stars.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                r: Math.random() * 1.2 + 0.3,
+                speed: Math.random() * 0.25 + 0.05,
+                alpha: Math.random() * 0.5 + 0.5
+            });
+        }
+    }
+    function drawStars() {
+        ctx.clearRect(0, 0, w, h);
+        for (const s of stars) {
+            ctx.save();
+            ctx.globalAlpha = s.alpha;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
+            ctx.fillStyle = '#fff';
+            ctx.shadowColor = '#fff';
+            ctx.shadowBlur = 8;
+            ctx.fill();
+            ctx.restore();
+        }
+    }
+    function animateStars() {
+        for (const s of stars) {
+            s.x += s.speed;
+            if (s.x > w) s.x = 0;
+        }
+        drawStars();
+        requestAnimationFrame(animateStars);
+    }
+    window.addEventListener('resize', () => {
+        resizeStarfield();
+        createStars();
+    });
+    resizeStarfield();
+    createStars();
+    animateStars();
+
+    // Header hide/show on scroll, only visible at top
+    let lastScroll = 0;
+    const header = document.querySelector('header');
+    let ticking = false;
+    function onScroll() {
+        const current = window.scrollY;
+        if (current <= 0) {
+            header.classList.remove('hide');
+            header.classList.add('show');
+        } else if (current > lastScroll && current > 60) {
+            header.classList.remove('show');
+            header.classList.add('hide');
+        } else if (current < lastScroll) {
+            if (current < 60) {
+                header.classList.remove('hide');
+                header.classList.add('show');
+            } else {
+                header.classList.remove('hide');
+                header.classList.add('show');
+            }
+        }
+        lastScroll = current;
+    }
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                onScroll();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+    // Ensure header is visible at very top
+    onScroll();
+    </script>
+    <script src="intro.js"></script>
+</body>
+</html>
