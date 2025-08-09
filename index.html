@@ -31,7 +31,7 @@
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             min-height: 100vh;
-            color: #ffffff;
+            
             line-height: 1.6;
             overflow-x: hidden;
             position: relative;
@@ -48,7 +48,7 @@
         }
         header {
             
-            color: #fff;
+            
             padding: 1rem 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             position: sticky;
@@ -117,7 +117,7 @@
         }
         .hero {
             
-            color: #fff;
+            
             padding: 8rem 2vw 6rem;
             text-align: center;
             position: relative;
@@ -130,7 +130,7 @@
         .hero-content {
             max-width: 900px;
             margin: 0 auto;
-            background: rgba(26, 77, 46, 0.75);
+            background: rgba(136, 24, 24, 0.82);
             padding: 3rem 2rem;
             border-radius: 20px;
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
@@ -186,9 +186,9 @@
             padding: 0 2vw;
         }
         .highlight-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(92, 5, 5, 0.1);
             border-radius: 18px;
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 24px rgba(90, 9, 9, 0.2);
             padding: 2.5rem 1.5rem;
             flex: 1 1 280px;
             min-width: 280px;
@@ -200,7 +200,7 @@
         }
         .highlight-card:hover {
             transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 12px 40px rgba(94, 9, 9, 0.3);
             border-color: #f9d923;
         }
         .highlight-card img {
@@ -208,7 +208,7 @@
             height: 80px;
             object-fit: contain;
             margin-bottom: 1.2rem;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+            filter: drop-shadow(0 2px 4px rgba(110, 13, 13, 0.2));
             transition: transform 0.3s ease;
         }
         .highlight-card:hover img {
@@ -232,7 +232,7 @@
             text-align: center;
             padding: 1.5rem 0;
             margin-top: 3rem;
-            box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 -3px 12px rgba(106, 11, 11, 0.15);
         }
         footer a {
             color: #f9d923;
@@ -280,6 +280,9 @@
                 <a href="csr.html">CSR & Mentorship</a>
                 <a href="consultation.html">Consultation</a>
                 <a href="history.html">Our History</a>
+                <button id="theme-toggle" class="absolute top-6 right-8 bg-yellow-400 text-black px-3 py-1 rounded-full font-bold shadow hover:bg-yellow-300 transition z-50">
+  🌙
+</button>
             </nav>
         </div>
     </header>
@@ -294,6 +297,7 @@
             <a href="training.html" class="cta-btn">Join Our Journey</a>
         </div>
     </section>
+    
 
     <section class="highlights">
         <div class="highlight-card">
@@ -401,5 +405,99 @@
         resizeStarfield();
         animate();
     </script>
+<script>
+/**
+ * TypingTask: Represents a single typing animation for an element.
+ */
+class TypingTask {
+    constructor(element, text, speed) {
+        this.element = element;
+        this.text = text;
+        this.speed = speed;
+    }
+}
+
+/**
+ * typeText: Types out text in an element, then calls onDone.
+ */
+function typeText(task, onDone) {
+    let i = 0;
+    function step() {
+        if (i <= task.text.length) {
+            task.element.innerHTML = task.text.slice(0, i) + '<span class="blinking-cursor">|</span>';
+            i++;
+            setTimeout(step, task.speed);
+        } else {
+            task.element.innerHTML = task.text;
+            if (onDone) onDone();
+        }
+    }
+    step();
+}
+
+/**
+ * processTypingStack: Pops tasks from the stack and types them in order.
+ */
+function processTypingStack(stack) {
+    if (stack.length === 0) return;
+    const task = stack.shift(); // queue: FIFO, or use pop() for stack: LIFO
+    typeText(task, () => {
+        setTimeout(() => processTypingStack(stack), 350);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const h1 = document.querySelector('.hero-content h1');
+    const h2 = document.querySelector('.hero-content h2');
+    const p = document.querySelector('.hero-content p');
+
+    // Prepare tasks (queue order: h1, h2, p)
+    const tasks = [];
+    if (h1) {
+        tasks.push(new TypingTask(h1, h1.textContent, 40));
+        h1.textContent = '';
+    }
+    if (h2) {
+        tasks.push(new TypingTask(h2, h2.textContent, 25));
+        h2.textContent = '';
+    }
+    if (p) {
+        tasks.push(new TypingTask(p, p.textContent, 15));
+        p.textContent = '';
+    }
+
+    // Start the typing animation
+    processTypingStack(tasks);
+});
+
+// Blinking cursor style
+const style = document.createElement('style');
+style.innerHTML = `.blinking-cursor{font-weight:100;color:#f9d923;animation:blink 1s steps(2,start) infinite}@keyframes blink{to{opacity:.1}}`;
+document.head.appendChild(style);
+</script>
+<script>
+const toggle = document.getElementById('theme-toggle');
+const body = document.body;
+toggle.addEventListener('click', () => {
+    body.classList.toggle('light-mode');
+    toggle.textContent = body.classList.contains('light-mode') ? '☀️' : '🌙';
+});
+// Optional: CSS for light mode
+const style = document.createElement('style');
+style.innerHTML = `
+.light-mode {
+  background: linear-gradient(135deg, #f9f9f9, #e6e6e6) !important;
+  color: #222 !important;
+}
+.light-mode .hero-content, .light-mode .highlight-card {
+  background: rgba(255,255,255,0.82) !important;
+  color: #222 !important;
+}
+.light-mode nav a, .light-mode .cta-btn {
+  color: #222 !important;
+}
+`;
+document.head.appendChild(style);
+</script>
 </body>
 </html>
