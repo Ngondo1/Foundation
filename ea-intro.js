@@ -68,6 +68,16 @@ if (!document.getElementById('ea-intro')) {
     // CSS
     const style = document.createElement('style');
     style.innerHTML = `
+    @media (max-width: 600px) {
+    .ea-overlay {
+        font-size: 1.1rem;
+        padding: 1rem;
+    }
+    .ea-overlay img {
+        max-width: 80vw;
+        width: 80vw;
+    }
+}
     #ea-intro {
         position: fixed;
         z-index: 9999;
@@ -79,6 +89,7 @@ if (!document.getElementById('ea-intro')) {
         flex-direction: column;
         transition: opacity ${OUTRO_FADE}ms;
         opacity: 1;
+        height: auto;
         overflow: hidden;
     }
     #ea-starfield {
