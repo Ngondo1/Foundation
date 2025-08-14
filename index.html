@@ -89,22 +89,6 @@
       border-radius: 2px;
       transition: 0.3s;
     }
-    #theme-toggle {
-      margin-left: 1.5rem;
-      background: var(--primary);
-      color: #222;
-      border: none;
-      border-radius: 50%;
-      width: 38px;
-      height: 38px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-      transition: background 0.2s;
-    }
-    #theme-toggle:hover {
-      background: #ffe066;
-    }
     /* Mobile nav */
     @media (max-width: 800px) {
       .nav-links {
@@ -327,18 +311,6 @@
       .highlight-card img { width: 60px; height: 60px; }
       .highlights { gap: 1.2rem; }
     }
-    /* Light mode */
-    .light-mode {
-      background: linear-gradient(135deg, #f9f9f9, #e6e6e6) !important;
-      color: var(--text-dark) !important;
-    }
-    .light-mode .hero-content, .light-mode .highlight-card {
-      background: transparent !important;
-      color: var(--text-dark) !important;
-    }
-    .light-mode nav a, .light-mode .cta-btn {
-      color: var(--text-dark) !important;
-    }
     /* Footer */
     footer {
       background: linear-gradient(90deg, #1a4d2e 60%, #f9d923 100%);
@@ -377,7 +349,6 @@
       <li><a href="mombasa.html">Mombasa</a></li>
       <li><a href="nyahururu.html">Nyahururu</a></li>
     </ul>
-    <button id="theme-toggle" title="Toggle light/dark mode">🌙</button>
   </nav>
 
   <section class="hero">
@@ -486,15 +457,6 @@
     const navLinks = document.getElementById('navLinks');
     navToggle.addEventListener('click', () => {
       navLinks.classList.toggle('open');
-    });
-  </script>
-  <!-- Light/Dark mode toggle -->
-  <script>
-    const toggle = document.getElementById('theme-toggle');
-    const body = document.body;
-    toggle.addEventListener('click', () => {
-      body.classList.toggle('light-mode');
-      toggle.textContent = body.classList.contains('light-mode') ? '☀️' : '🌙';
     });
   </script>
   <!-- Typing animation for hero -->
