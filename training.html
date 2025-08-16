@@ -7,11 +7,11 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
             min-height: 100vh;
-            background: #181c2b;
+            background: linear-gradient(180deg, #181c2b 0%, #2a3047 100%);
             color: #333;
-            line-height: 1.6;
+            line-height: 1.8;
             overflow-x: hidden;
         }
         #starfield {
@@ -19,15 +19,16 @@
             top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 0;
             pointer-events: none;
+            mix-blend-mode: screen;
         }
         header {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(12px) saturate(180%);
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(16px) saturate(200%);
             color: #fff;
-            padding: 1.5rem 0 1rem 0;
+            padding: 2rem 0;
             text-align: center;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.12);
-            border-bottom: 1.5px solid rgba(255,255,255,0.08);
+            box-shadow: 0 6px 32px rgba(0,0,0,0.18);
+            border-bottom: 1px solid rgba(255,255,255,0.12);
             position: fixed;
             top: 0;
             left: 0;
@@ -36,194 +37,230 @@
             transition: transform 0.4s cubic-bezier(.4,0,.2,1), background 0.3s;
         }
         header.hide {
-            transform: translateY(-120%);
+            transform: translateY(-100%);
         }
         header.show {
             transform: translateY(0);
         }
         header h1 {
-            font-size: 2.1rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: 1.5px;
-            font-weight: 700;
-            text-shadow: 0 2px 12px rgba(0,0,0,0.12);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            font-weight: 800;
+            text-shadow: 0 3px 20px rgba(0,0,0,0.2);
         }
         nav {
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
         nav a {
             color: #fff;
             text-decoration: none;
-            margin: 0 1.5rem;
+            margin: 0 2rem;
             font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: color 0.3s, transform 0.2s;
+            letter-spacing: 0.8px;
+            transition: color 0.3s, transform 0.2s, opacity 0.3s;
             position: relative;
+            opacity: 0.85;
         }
         nav a:hover {
-            color: #ffe066;
-            transform: translateY(-2px) scale(1.05);
+            color: #ffd700;
+            transform: translateY(-4px) scale(1.1);
+            opacity: 1;
         }
         nav a::after {
             content: '';
             position: absolute;
             width: 0;
             height: 2px;
-            bottom: -5px;
+            bottom: -8px;
             left: 0;
-            background: #ffe066;
-            transition: width 0.3s;
+            background: #ffd700;
+            transition: width 0.3s ease-in-out;
         }
         nav a:hover::after {
             width: 100%;
         }
-        .main-content {
-            max-width: 900px;
-            margin: 6.5rem auto 2rem auto;
-            padding: 2.8rem 2.2rem 2.2rem 2.2rem;
+        .hero-section {
             background: transparent;
-            border-radius: 22px;
-            box-shadow: 0 12px 40px 0 rgba(24,28,43,0.22), 0 1.5px 8px 0 rgba(24,28,43,0.10);
+            padding: 10rem 2rem 4rem;
+            text-align: center;
             position: relative;
             z-index: 2;
-            animation: fadeIn 0.5s cubic-bezier(.4,0,.2,1);
-            backdrop-filter: blur(10px) saturate(160%);
-            border: 1.5px solid rgba(255,255,255,0.18);
         }
-        @media (max-width: 768px) {
-            .main-content {
-                margin: 5.5rem 0.5rem 1rem 0.5rem;
-                padding: 1.2rem 0.5rem 1rem 0.5rem;
-            }
-        }
+        .main-content {
+            max-width: 1000px;
+            margin: 4rem auto 5rem auto;
+            padding: 4rem 3rem;
+            background: rgba(255,255,255,0.12);
+            border-radius: 28px;
+            box-shadow: 0 20px 56px rgba(0,0,0,0.22), 0 4px 16px rgba(0,0,0,0.12);
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 0.7s cubic-bezier(.4,0,.2,1);
+            backdrop-filter: blur(14px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.18);
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
         h2 {
-            color: #222a3a;
-            font-size: 2.2rem;
+            color: #fff;
+            font-size: 2.6rem;
             text-align: center;
-            margin-bottom: 1.2rem;
-            font-weight: 700;
+            margin-bottom: 2rem;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            text-shadow: 0 3px 10px rgba(0,0,0,0.12);
         }
         .program-list {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+        .program-list p {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            margin-bottom: 1.5rem;
         }
         .program-list ul {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
         }
         .program-list li {
-            margin-bottom: 0.5rem;
-            font-size: 1.08rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.15rem;
+            color: #e0e0e0;
         }
         .highlight {
-            color: #ffe066;
+            color: #ffd700;
             font-weight: bold;
         }
         .stats {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            margin-bottom: 2rem;
-            gap: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3.5rem;
         }
         .stat-card {
-            background: rgba(255,255,255,0.85);
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(24,28,43,0.10);
-            padding: 1.2rem 2rem;
-            min-width: 180px;
+            background: rgba(255,255,255,0.92);
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            padding: 2rem;
             text-align: center;
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.25);
         }
         .stat-card h3 {
             color: #222a3a;
-            font-size: 2rem;
-            margin-bottom: 0.3rem;
+            font-size: 2.4rem;
+            margin-bottom: 0.5rem;
         }
         .stat-card p {
-            color: #666;
-            font-size: 1rem;
+            color: #555;
+            font-size: 1.1rem;
         }
         .schedule-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            margin-bottom: 2rem;
+            margin-bottom: 3.5rem;
             background: #fff;
-            border-radius: 10px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(24,28,43,0.07);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
         }
         .schedule-table th, .schedule-table td {
-            padding: 1rem;
+            padding: 1.5rem;
             text-align: left;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e5e5e5;
         }
         .schedule-table th {
-            background: #ffe066;
+            background: #ffd700;
             color: #222a3a;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
         }
         .schedule-table tr:last-child td {
             border-bottom: none;
         }
         .schedule-table tr:hover {
-            background: #f9f9f9;
+            background: #f5f5f5;
+            transition: background 0.3s;
         }
         .contact-section {
-            margin-top: 2rem;
-            background: rgba(255,255,255,0.85);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 8px rgba(24,28,43,0.08);
+            margin-top: 3rem;
+            background: rgba(255,255,255,0.92);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
             text-align: center;
         }
         .contact-section h3 {
             color: #222a3a;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.6rem;
         }
         .contact-section p {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: #333;
         }
         .contact-section a {
             color: #222a3a;
             font-weight: bold;
             text-decoration: none;
-            margin: 0 0.5rem;
+            margin: 0 0.8rem;
+            transition: color 0.3s, transform 0.2s;
         }
         .contact-section a:hover {
-            color: #ffe066;
+            color: #ffd700;
+            transform: translateY(-3px);
         }
         footer {
-            background: rgba(255,255,255,0.10);
+            background: rgba(255,255,255,0.15);
             color: #fff;
             text-align: center;
-            padding: 1rem 0;
-            margin-top: 2rem;
-            box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
-            border-top: 1.5px solid rgba(255,255,255,0.08);
+            padding: 2rem 0;
+            margin-top: 4rem;
+            box-shadow: 0 -6px 16px rgba(0,0,0,0.12);
+            border-top: 1px solid rgba(255,255,255,0.12);
         }
         @media (max-width: 768px) {
-            .main-content {
-                margin: 5.5rem 0.5rem 1rem 0.5rem;
-                padding: 1rem;
+            .hero-section {
+                padding: 8rem 1.5rem 3rem;
             }
-            .stat-card {
-                min-width: 120px;
-                padding: 1rem;
+            .main-content {
+                margin: 3rem 1.2rem 2rem;
+                padding: 2rem 1.5rem;
+            }
+            .stat snail-card {
+                min-width: 160px;
+                padding: 1.5rem;
             }
             h2 {
-                font-size: 1.3rem;
+                font-size: 2rem;
             }
             nav a {
-                margin: 0 1rem;
+                margin: 0 1.2rem;
+                font-size: 0.95rem;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-section {
+                padding: 6rem 1rem 2rem;
+            }
+            nav a {
+                margin: 0 0.6rem;
                 font-size: 0.9rem;
+            }
+            .stats {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -244,6 +281,12 @@
         </nav>
     </header>
     <main>
+        <section class="hero-section">
+            <h2>Empowering Young Golfers Across Kenya</h2>
+            <p class="text-lg text-gray-200 max-w-2xl mx-auto">
+                Join the Michael Karanga Golf Foundation to discover world-class junior training programs designed to nurture talent and foster a love for golf.
+            </p>
+        </section>
         <div class="main-content">
             <h2>Junior Golf Training Programs</h2>
             <div class="program-list">
@@ -307,80 +350,86 @@
         &copy; 2024 Michael Karanga Golf Foundation. All rights reserved.
     </footer>
     <script>
-    // Starfield background
+    // Optimized Starfield Background with Parallax
     const canvas = document.getElementById('starfield');
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     let stars = [];
     let w = window.innerWidth, h = window.innerHeight;
+    const maxStars = 180;
+
     function resizeStarfield() {
-        w = window.innerWidth; h = window.innerHeight;
-        canvas.width = w; canvas.height = h;
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = w;
+        canvas.height = h;
+        createStars();
     }
+
     function createStars() {
         stars = [];
-        for (let i = 0; i < 120; i++) {
+        for (let i = 0; i < maxStars; i++) {
             stars.push({
                 x: Math.random() * w,
                 y: Math.random() * h,
-                r: Math.random() * 1.2 + 0.3,
-                speed: Math.random() * 0.25 + 0.05,
-                alpha: Math.random() * 0.5 + 0.5
+                r: Math.random() * 1.8 + 0.6,
+                speed: Math.random() * 0.4 + 0.1,
+                alpha: Math.random() * 0.7 + 0.3,
+                flicker: Math.random() * 0.03 + 0.01,
+                depth: Math.random() * 0.5 + 0.5
             });
         }
     }
-    function drawStars() {
+
+    function drawStars(t, scrollY) {
         ctx.clearRect(0, 0, w, h);
         for (const s of stars) {
             ctx.save();
-            ctx.globalAlpha = s.alpha;
+            ctx.globalAlpha = s.alpha + Math.sin(t * s.flicker) * 0.25;
+            const parallaxY = s.y - scrollY * s.depth * 0.02;
             ctx.beginPath();
-            ctx.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
+            ctx.arc(s.x, parallaxY, s.r, 0, 2 * Math.PI);
             ctx.fillStyle = '#fff';
             ctx.shadowColor = '#fff';
-            ctx.shadowBlur = 8;
+            ctx.shadowBlur = 12;
             ctx.fill();
             ctx.restore();
         }
     }
-    function animateStars() {
+
+    function animateStars(t = 0) {
+        const scrollY = window.scrollY;
         for (const s of stars) {
             s.x += s.speed;
-            if (s.x > w) s.x = 0;
+            if (s.x > w) s.x = -s.r;
         }
-        drawStars();
+        drawStars(t / 1000, scrollY);
         requestAnimationFrame(animateStars);
     }
-    window.addEventListener('resize', () => {
-        resizeStarfield();
-        createStars();
-    });
+
+    window.addEventListener('resize', resizeStarfield);
     resizeStarfield();
-    createStars();
     animateStars();
 
-    // Header hide/show on scroll, only visible at top
+    // Enhanced Header Scroll Behavior
     let lastScroll = 0;
     const header = document.querySelector('header');
     let ticking = false;
+
     function onScroll() {
         const current = window.scrollY;
         if (current <= 0) {
             header.classList.remove('hide');
             header.classList.add('show');
-        } else if (current > lastScroll && current > 60) {
+        } else if (current > lastScroll && current > 100) {
             header.classList.remove('show');
             header.classList.add('hide');
-        } else if (current < lastScroll) {
-            if (current < 60) {
-                header.classList.remove('hide');
-                header.classList.add('show');
-            } else {
-                header.classList.remove('hide');
-                header.classList.add('show');
-            }
+        } else if (current < lastScroll && current > 100) {
+            header.classList.remove('hide');
+            header.classList.add('show');
         }
         lastScroll = current;
     }
+
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
@@ -390,8 +439,88 @@
             ticking = true;
         }
     });
-    // Ensure header is visible at very top
-    onScroll();
+
+    // Smooth Scroll for Navigation Links
+    document.querySelectorAll('nav a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const target = targetId === 'index.html' ? document.body : document.getElementById(targetId);
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            } else {
+                window.location.href = this.getAttribute('href');
+            }
+        });
+    });
+
+    // Navigation Link Hover Particle Effect
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            const rect = link.getBoundingClientRect();
+            const particle = document.createElement('span');
+            particle.style.position = 'absolute';
+            particle.style.background = '#ffd700';
+            particle.style.width = '4px';
+            particle.style.height = '4px';
+            particle.style.borderRadius = '50%';
+            particle.style.left = `${rect.left + rect.width / 2}px`;
+            particle.style.top = `${rect.bottom}px`;
+            particle.style.zIndex = '5';
+            document.body.appendChild(particle);
+            particle.animate(
+                [
+                    { transform: 'translateY(0) scale(1)', opacity: 1 },
+                    { transform: 'translateY(20px) scale(0.5)', opacity: 0 }
+                ],
+                { duration: 600, easing: 'ease-out' }
+            ).onfinish = () => particle.remove();
+        });
+    });
+
+    // Intersection Observer for Animations
+    const observerOptions = { threshold: 0.2 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = 1;
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Animate Hero and Main Content
+    const heroSection = document.querySelector('.hero-section');
+    const mainContent = document.querySelector('.main-content');
+    [heroSection, mainContent].forEach(el => {
+        el.style.opacity = 0;
+        el.style.transform = 'translateY(50px)';
+        el.style.transition = 'opacity 0.6s, transform 0.6s';
+        observer.observe(el);
+    });
+
+    // Staggered Stat Card Animation
+    const statCards = document.querySelectorAll('.stat-card');
+    const statObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 200);
+            }
+        });
+    }, { threshold: 0.4 });
+    statCards.forEach(card => {
+        card.style.opacity = 0;
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'opacity 0.6s, transform 0.6s';
+        statObserver.observe(card);
+    });
     </script>
     <script src="intro.js"></script>
 </body>

@@ -1,209 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<link href="bestcss.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="bestcss.css" rel="stylesheet">
     <meta charset="UTF-8">
     <title>CSR & Mentorship - Michael Karanga Golf Foundation</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
             min-height: 100vh;
-            color: #fff;
-            line-height: 1.6;
+            background: linear-gradient(135deg, #0a1a2a 0%, #2a3047 100%);
+            color: #333;
+            line-height: 1.8;
             overflow-x: hidden;
-            position: relative;
-            background: linear-gradient(135deg, #0a1a2a, #1a3a4a);
         }
-        canvas#starfield {
+        #starfield {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+        header {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(16px) saturate(200%);
+            color: #fff;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 6px 32px rgba(0,0,0,0.18);
+            border-bottom: 1px solid rgba(255,255,255,0.12);
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
-            height: 100vh;
-            z-index: -1;
+            z-index: 10;
+            transition: transform 0.4s cubic-bezier(.4,0,.2,1), background 0.3s;
         }
-        header {
-            color: #fff;
-            padding: 1rem 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(5px);
-            background: transparent;
+        header.hide {
+            transform: translateY(-100%);
+        }
+        header.show {
+            transform: translateY(0);
         }
         .navbar {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2vw;
-            text-align: center;
             position: relative;
         }
         .brand {
             position: absolute;
-            top: -60px;
+            top: -70px;
             left: 50%;
             transform: translateX(-50%);
         }
         .brand-logo {
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid #f9d923;
+            border: 4px solid #ffd700;
             background: #fff;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease, box-shadow 0.3s ease;
         }
         .brand-logo:hover {
-            transform: rotate(10deg) scale(1.1);
+            transform: rotate(15deg) scale(1.15);
+            box-shadow: 0 8px 24px rgba(255,215,0,0.3);
         }
         nav {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            padding: 1.5rem 0;
+            gap: 2rem;
+            padding: 2rem 0;
         }
         nav a {
             color: #fff;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
-            padding: 0.4rem 0.9rem;
-            border-radius: 8px;
-            transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            font-size: 1.15rem;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            transition: background 0.3s, color 0.3s, transform 0.2s, opacity 0.3s;
             position: relative;
+            opacity: 0.85;
         }
         nav a:hover, nav a.active {
-            background: #f9d923;
+            background: #ffd700;
             color: #1a4d2e;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            opacity: 1;
         }
         nav a::after {
             content: '';
             position: absolute;
             width: 0;
             height: 3px;
-            bottom: -5px;
+            bottom: -8px;
             left: 0;
-            background: #f9d923;
-            transition: width 0.3s ease;
+            background: #ffd700;
+            transition: width 0.3s ease-in-out;
         }
-        nav a:hover::after {
+        nav a:hover::after, nav a.active::after {
             width: 100%;
         }
-        .main-content {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(8px);
+        .hero-section {
+            background: transparent;
+            padding: 10rem 2rem 4rem;
+            text-align: center;
             position: relative;
-            z-index: 1;
-            animation: fadeIn 0.8s ease-in;
+            z-index: 2;
+        }
+        .main-content {
+            max-width: 1000px;
+            margin: 4rem auto 5rem auto;
+            padding: 4rem 3rem;
+            background: rgba(255,255,255,0.12);
+            border-radius: 28px;
+            box-shadow: 0 20px 56px rgba(0,0,0,0.22), 0 4px 16px rgba(0,0,0,0.12);
+            border: 2px solid #ffd70055;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 0.7s cubic-bezier(.4,0,.2,1);
+            backdrop-filter: blur(14px) saturate(180%);
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
         h2 {
-            color: #f9d923;
-            font-size: 2.2rem;
+            color: #ffd700;
+            font-size: 2.6rem;
             text-align: center;
-            margin-bottom: 1.2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            text-shadow: 0 3px 10px rgba(0,0,0,0.12);
         }
         .csr-section {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+        .csr-section p {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            margin-bottom: 1.5rem;
         }
         .csr-section ul {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
         }
         .csr-section li {
-            margin-bottom: 0.5rem;
-            font-size: 1.08rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.15rem;
+            color: #e0e0e0;
         }
         .highlight {
-            color: #f9d923;
+            color: #ffd700;
             font-weight: bold;
         }
         .impact-cards {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 2rem;
-            gap: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3.5rem;
         }
         .impact-card {
-            background: rgba(255,255,255,0.12);
-            border-radius: 18px;
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
-            padding: 2rem 1.5rem;
-            min-width: 220px;
-            max-width: 320px;
+            background: rgba(255,255,255,0.92);
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            padding: 2.5rem 2rem;
             text-align: center;
-            transition: all 0.3s ease;
-            border: 3px solid #f9d92333;
-            backdrop-filter: blur(5px);
+            transition: transform 0.4s, box-shadow 0.4s, border-color 0.3s;
+            border: 2px solid #ffd70055;
         }
         .impact-card:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-            border-color: #f9d923;
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+            border-color: #ffd700;
         }
         .impact-card h3 {
-            color: #f9d923;
-            font-size: 1.3rem;
+            color: #1a4d2e;
+            font-size: 1.5rem;
             margin-bottom: 0.8rem;
             font-weight: 700;
             text-transform: uppercase;
         }
         .impact-card p {
-            color: #e6f0fa;
-            font-size: 1.05rem;
-            line-height: 1.5;
+            color: #333;
+            font-size: 1.1rem;
+            line-height: 1.6;
         }
         footer {
-            background: linear-gradient(90deg, #0a1a2a 60%, #f9d923 100%);
+            background: linear-gradient(90deg, rgba(10,26,42,0.9) 60%, #ffd700 100%);
             color: #fff;
             text-align: center;
-            padding: 1.5rem 0;
-            margin-top: 3rem;
-            box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.15);
+            padding: 2rem 0;
+            margin-top: 4rem;
+            box-shadow: 0 -6px 16px rgba(0,0,0,0.12);
+            border-top: 1px solid rgba(255,255,255,0.12);
         }
         footer a {
-            color: #f9d923;
+            color: #ffd700;
             text-decoration: underline;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, transform 0.2s ease;
         }
         footer a:hover {
             color: #fff;
+            transform: translateY(-2px);
         }
         @media (max-width: 900px) {
-            .impact-cards { flex-direction: column; align-items: center; }
-            .impact-card { padding: 1.5rem 1rem; }
-            .brand-logo { width: 80px; height: 80px; }
-            .brand { top: -50px; }
+            .impact-cards { grid-template-columns: 1fr; }
+            .impact-card { padding: 2rem 1.5rem; }
+            .brand-logo { width: 90px; height: 90px; }
+            .brand { top: -60px; }
         }
         @media (max-width: 600px) {
+            .hero-section { padding: 8rem 1.5rem 3rem; }
+            .main-content { margin: 3rem 1.2rem 2rem; padding: 2rem 1.5rem; }
             .navbar { padding: 1rem 2vw; }
-            .brand-logo { width: 60px; height: 60px; }
-            .brand { top: -40px; }
-            nav { flex-wrap: wrap; gap: 1rem; padding: 1rem 0; }
-            .main-content { padding: 1rem; }
-            h2 { font-size: 1.3rem; }
+            .brand-logo { width: 70px; height: 70px; }
+            .brand { top: -50px; }
+            nav { flex-wrap: wrap; gap: 1.2rem; padding: 1.5rem 0; }
+            nav a { font-size: 1rem; padding: 0.4rem 0.8rem; }
+            h2 { font-size: 2rem; }
+        }
+        @media (max-width: 480px) {
+            .hero-section { padding: 6rem 1rem 2rem; }
+            nav a { margin: 0 0.6rem; font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
     <canvas id="starfield"></canvas>
-    <header id="main-header">
+    <header id="main-header" class="show">
         <div class="navbar">
             <div class="brand">
                 <img src="logo.png" alt="MK Golf Logo" class="brand-logo">
@@ -220,118 +249,217 @@
             </nav>
         </div>
     </header>
-
-<main>
-    <div class="main-content" style="margin-top:2.5rem; margin-bottom:2.5rem; border:2.5px solid #f9d92355; padding:2.5rem 2rem 2.5rem 2rem;">
-        <h2 style="margin-bottom:2.2rem;">CSR & Mentorship</h2>
-        <div class="csr-section" style="margin-bottom:2.5rem;">
-            <p style="margin-bottom:1.2rem;">
-                The Michael Karanga Golf Foundation is passionate about giving back to the community and nurturing the next generation of golfers. Our CSR and mentorship initiatives include:
+    <main>
+        <section class="hero-section">
+            <h2>Empowering Communities Through Golf</h2>
+            <p class="text-lg text-gray-200 max-w-2xl mx-auto">
+                The Michael Karanga Golf Foundation is dedicated to making a positive impact through CSR initiatives and mentorship programs, fostering growth and opportunity for young golfers.
             </p>
-            <ul style="margin-left:1.5rem;">
-                <li style="margin-bottom:0.7rem;"><span class="highlight">Inspirational Talks:</span> Michael Karanga gives motivational talks to students in schools and during long holiday training sessions, inspiring them to pursue excellence both in golf and in life.</li>
-                <li style="margin-bottom:0.7rem;"><span class="highlight">Free Golf Clinics:</span> The foundation organizes free golf clinics, providing access to golf lessons and free golf balls for young aspiring players.</li>
-                <li style="margin-bottom:0.7rem;"><span class="highlight">Sponsorship for Elite Golfers:</span> We sponsor talented golfers, especially those from disabled backgrounds, giving them opportunities to compete and excel.</li>
-            </ul>
+        </section>
+        <div class="main-content">
+            <h2>CSR & Mentorship Initiatives</h2>
+            <div class="csr-section">
+                <p>
+                    The Michael Karanga Golf Foundation is passionate about giving back to the community and nurturing the next generation of golfers. Our CSR and mentorship initiatives include:
+                </p>
+                <ul>
+                    <li><span class="highlight">Inspirational Talks:</span> Michael Karanga gives motivational talks to students in schools and during long holiday training sessions, inspiring them to pursue excellence both in golf and in life.</li>
+                    <li><span class="highlight">Free Golf Clinics:</span> The foundation organizes free golf clinics, providing access to golf lessons and free golf balls for young aspiring players.</li>
+                    <li><span class="highlight">Sponsorship for Elite Golfers:</span> We sponsor talented golfers, especially those from disabled backgrounds, giving them opportunities to compete and excel.</li>
+                </ul>
+            </div>
+            <div class="impact-cards">
+                <div class="impact-card">
+                    <h3>Motivational Talks</h3>
+                    <p>Empowering students with life skills and confidence through school visits and holiday sessions.</p>
+                </div>
+                <div class="impact-card">
+                    <h3>Free Golf Clinics</h3>
+                    <p>Removing barriers by offering free lessons and equipment to all interested youth.</p>
+                </div>
+                <div class="impact-card">
+                    <h3>Elite Sponsorship</h3>
+                    <p>Supporting and sponsoring elite golfers from underprivileged and disabled backgrounds.</p>
+                </div>
+            </div>
         </div>
+    </main>
+    <footer>
+        &copy; 2024 Michael Karanga Golf Foundation. All rights reserved.
+    </footer>
+    <script>
+    // Optimized Starfield Background with Parallax
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d', { alpha: true });
+    let stars = [];
+    let w = window.innerWidth, h = window.innerHeight;
+    const maxStars = 180;
 
-        <div class="impact-cards" style="gap:2.2rem; margin-bottom:2.5rem;">
-            <div class="impact-card" style="padding:2.2rem 1.7rem; border:2.5px solid #f9d92355;">
-                <h3>Motivational Talks</h3>
-                <p>Empowering students with life skills and confidence through school visits and holiday sessions.</p>
-            </div>
-            <div class="impact-card" style="padding:2.2rem 1.7rem; border:2.5px solid #f9d92355;">
-                <h3>Free Golf Clinics</h3>
-                <p>Removing barriers by offering free lessons and equipment to all interested youth.</p>
-            </div>
-            <div class="impact-card" style="padding:2.2rem 1.7rem; border:2.5px solid #f9d92355;">
-                <h3>Elite Sponsorship</h3>
-                <p>Supporting and sponsoring elite golfers from underprivileged and disabled backgrounds.</p>
-            </div>
-        </div>
-    </div>
-</main>
-
-<footer>
-    &copy; 2024 Michael Karanga Golf Foundation. All rights reserved.
-</footer>
-
-<script>
-// Starfield background animation
-const canvas = document.getElementById('starfield');
-if (canvas) {
-    const ctx = canvas.getContext('2d');
     function resizeStarfield() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        initStars();
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = w;
+        canvas.height = h;
+        createStars();
     }
-    window.addEventListener('resize', resizeStarfield);
-    const stars = [];
-    const numStars = 200;
-    function Star() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.z = Math.random() * canvas.width;
-        this.speed = 2 + Math.random() * 3;
-        this.radius = Math.random() * 1.5;
-        this.update = function() {
-            this.z -= this.speed;
-            if (this.z <= 0) {
-                this.z = canvas.width;
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-            }
-        };
-        this.draw = function() {
-            const px = (this.x - canvas.width / 2) * (canvas.width / this.z) + canvas.width / 2;
-            const py = (this.y - canvas.height / 2) * (canvas.width / this.z) + canvas.height / 2;
-            const scale = canvas.width / this.z;
-            const alpha = Math.max(0, 1 - this.z / canvas.width);
-            ctx.beginPath();
-            ctx.arc(px, py, this.radius * scale, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-            ctx.fill();
-        };
-    }
-    function initStars() {
-        stars.length = 0;
-        for (let i = 0; i < numStars; i++) {
-            stars.push(new Star());
+
+    function createStars() {
+        stars = [];
+        for (let i = 0; i < maxStars; i++) {
+            stars.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                r: Math.random() * 1.8 + 0.6,
+                speed: Math.random() * 0.4 + 0.1,
+                alpha: Math.random() * 0.7 + 0.3,
+                flicker: Math.random() * 0.03 + 0.01,
+                depth: Math.random() * 0.5 + 0.5
+            });
         }
     }
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        stars.forEach(star => {
-            star.update();
-            star.draw();
-        });
-        requestAnimationFrame(animate);
-    }
-    resizeStarfield();
-    animate();
-}
 
-// Hide header on scroll down, show on scroll up
-let lastScrollY = window.scrollY;
-const header = document.getElementById('main-header');
-let ticking = false;
-window.addEventListener('scroll', function() {
-    if (!ticking) {
-        window.requestAnimationFrame(function() {
-            const currentScrollY = window.scrollY;
-            if (currentScrollY > lastScrollY && currentScrollY > 80) {
-                header.style.transform = 'translateY(-120%)';
-            } else {
-                header.style.transform = 'translateY(0)';
-            }
-            lastScrollY = currentScrollY;
-            ticking = false;
-        });
-        ticking = true;
+    function drawStars(t, scrollY) {
+        ctx.clearRect(0, 0, w, h);
+        for (const s of stars) {
+            ctx.save();
+            ctx.globalAlpha = s.alpha + Math.sin(t * s.flicker) * 0.25;
+            const parallaxY = s.y - scrollY * s.depth * 0.02;
+            ctx.beginPath();
+            ctx.arc(s.x, parallaxY, s.r, 0, 2 * Math.PI);
+            ctx.fillStyle = '#fff';
+            ctx.shadowColor = '#fff';
+            ctx.shadowBlur = 12;
+            ctx.fill();
+            ctx.restore();
+        }
     }
-});
-</script>
+
+    function animateStars(t = 0) {
+        const scrollY = window.scrollY;
+        for (const s of stars) {
+            s.x += s.speed;
+            if (s.x > w) s.x = -s.r;
+        }
+        drawStars(t / 1000, scrollY);
+        requestAnimationFrame(animateStars);
+    }
+
+    window.addEventListener('resize', resizeStarfield);
+    resizeStarfield();
+    animateStars();
+
+    // Enhanced Header Scroll Behavior
+    let lastScroll = 0;
+    const header = document.getElementById('main-header');
+    let ticking = false;
+
+    function onScroll() {
+        const current = window.scrollY;
+        if (current <= 0) {
+            header.classList.remove('hide');
+            header.classList.add('show');
+        } else if (current > lastScroll && current > 100) {
+            header.classList.remove('show');
+            header.classList.add('hide');
+        } else if (current < lastScroll && current > 100) {
+            header.classList.remove('hide');
+            header.classList.add('show');
+        }
+        lastScroll = current;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                onScroll();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    // Smooth Scroll for Navigation Links
+    document.querySelectorAll('nav a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const target = targetId === 'index.html' ? document.body : document.getElementById(targetId);
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            } else {
+                window.location.href = this.getAttribute('href');
+            }
+        });
+    });
+
+    // Navigation Link Hover Particle Effect
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            const rect = link.getBoundingClientRect();
+            const particle = document.createElement('span');
+            particle.style.position = 'absolute';
+            particle.style.background = '#ffd700';
+            particle.style.width = '4px';
+            particle.style.height = '4px';
+            particle.style.borderRadius = '50%';
+            particle.style.left = `${rect.left + rect.width / 2}px`;
+            particle.style.top = `${rect.bottom}px`;
+            particle.style.zIndex = '5';
+            document.body.appendChild(particle);
+            particle.animate(
+                [
+                    { transform: 'translateY(0) scale(1)', opacity: 1 },
+                    { transform: 'translateY(20px) scale(0.5)', opacity: 0 }
+                ],
+                { duration: 600, easing: 'ease-out' }
+            ).onfinish = () => particle.remove();
+        });
+    });
+
+    // Intersection Observer for Animations
+    const observerOptions = { threshold: 0.2 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = 1;
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Animate Hero and Main Content
+    const heroSection = document.querySelector('.hero-section');
+    const mainContent = document.querySelector('.main-content');
+    [heroSection, mainContent].forEach(el => {
+        el.style.opacity = 0;
+        el.style.transform = 'translateY(50px)';
+        el.style.transition = 'opacity 0.6s, transform 0.6s';
+        observer.observe(el);
+    });
+
+    // Staggered Impact Card Animation
+    const impactCards = document.querySelectorAll('.impact-card');
+    const impactObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 200);
+            }
+        });
+    }, { threshold: 0.4 });
+    impactCards.forEach(card => {
+        card.style.opacity = 0;
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'opacity 0.6s, transform 0.6s';
+        impactObserver.observe(card);
+    });
+    </script>
+    <script src="intro.js"></script>
 </body>
 </html>
-<script src="intro.js"></script>
